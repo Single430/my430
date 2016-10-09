@@ -1,0 +1,56 @@
+{% extends "blogs/base.html" %}
+{% load staticfiles %}
+
+{% block content %}
+
+<html>
+      <title>编辑文章</title>
+      <link rel="stylesheet" type="text/css" href="{% static 'blogs/css/add_article.css' %}" />
+<body>
+{% for user in userinfo %}
+    <h2 class="about_h">您当前的位置：<a href="{% url 'blogs:index' user.username %}">首页</a>&nbsp;>&nbsp;编辑文章</h2>
+    <div class="row">
+    {% for blog in blogs %}
+        <form method="post" action="{% url 'blogs:new_sub_article' blog.id %}">
+            {% csrf_token %}
+            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 col-xl-6" align="center">
+                <label>
+                    <select name="article_type" style="height: 20px; width: 120px;" >
+                        <option selected="selected" value="Python" >Python</option>
+                        <option value="Python">Python</option>
+                        <option value="Linux">Linux</option>
+{#                        <option value="mytalk">个人杂谈</option>#}
+{#                        <option value="diary">偶尔能想起来的日记</option>#}
+                    </select>
+                </label>
+                <div class="form-group" align="center">
+                    <input type="text" id="contact_title" name="article_title" class="form-control" style="height: 20px; width: 256px"
+                           value="{{ blog.title }}" placeholder="Title"  required/>
+                </div><br />
+                <div class="form-group" align="center">
+                    <input type="text" id="contact_author" name="article_author" class="form-control" style="height: 20px; width: 256px;"
+                           value="{{ blog.author }}" placeholder="Author"  required/>
+                </div><br />
+                <div class="form-group" align="center">
+                    <textarea type="text" id="contact_summary" name="article_summary" class="form-control" cols="40" rows="3"
+                              placeholder="文章概要"  required>{{ blog.body_des }}</textarea>
+                </div><br />
+            </div>
+
+            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                <div class="form-group" align="center">
+                    <textarea id="contact_message" name="article_body" class="form-control" cols="40" rows="10"
+                              placeholder="文章内容" required>{{ blog.body }}</textarea>
+                </div>
+            </div><br />
+
+            <div class="col-xs-12" align="center">
+                <button type="submit" class="pull-xs-right tm-submit-btn" style="height: auto; width: auto">提 交</button>
+            </div>
+        </form>
+    {% endfor %}
+    </div>
+{% endfor %}
+</body>
+</html>
+{% endblock content %}

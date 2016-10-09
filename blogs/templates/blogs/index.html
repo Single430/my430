@@ -1,0 +1,162 @@
+<!doctype html>
+
+{% load staticfiles %}
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="绿色模板,个人网站模板,个人博客模板,博客模板,css3,html5,网站模板" />
+    <meta name="description" content="这是一个有关Green绿色小清新的夏天的css3 html5 网站模板" />
+    <link href="{% static 'blogs/css/styles.css' %}" rel="stylesheet">
+{#    <link rel="stylesheet" href="{% static 'blogs/css/month.css' %}" media="screen" type="text/css" />#}
+    <!--[if lt IE 9]>
+    <script src="js/modernizr.js"></script>
+    <![endif]-->
+</head>
+<body>
+<header>
+  <nav id="nav">
+    <ul>
+        {% for user in userinfo %}
+      <title>{{ user.username }}博客</title>
+      <li><a href="{% url 'online:login' %}">网站首页</a></li>
+      <li><a href="{% url 'blogs:python' user.username %}">Python</a></li>
+      <li><a href="{% url 'blogs:linux' user.username %}">Linux</a></li>
+{#      <li><a href="{% url 'blogs:listing' %}">分页</a></li>#}
+      <li><a href="{% url 'blogs:add_article' user.username %}" style="text-align: end">添加文章</a></li>
+        {% endfor %}
+
+{#        <div id='wrapper'>#}
+{#        <form>#}
+{#            <label>#}
+{#                <select class='custom-date' name='select'>#}
+{#                    <option value='7'>7 Days</option>#}
+{#                    <option value='30'>30 Days</option>#}
+{#                    <option selected='selected' value='90'>90 Days</option>#}
+{#                    <option value='180'>180 Days</option>#}
+{#                    <option value='365'>365 Days</option>#}
+{#                    <option value='custom'>Custom</option>#}
+{#                </select>#}
+{#            </label>#}
+{#        </form>#}
+{#    </div>#}
+
+    </ul>
+    <script src="{% static 'blogs/js/silder.js' %}"></script><!--获取当前页导航 高亮显示标题-->
+  </nav>
+</header>
+<div class="mainContent">
+  <div class="ulist">
+    <section> <a href="#"> <img src="{% static 'blogs/images/s5.jpg' %}"></a>
+      <ul>
+        <h2><a href="#">Python Web开发</a></h2>
+        <p>于千万人之中，我遇见了我所遇见的人...</p>
+      </ul>
+    </section>
+    <section> <a href="#"><img src="{% static 'blogs/images/s7.jpg' %}"></a>
+      <ul>
+        <h2><a href="#">陌上花开缓缓归</a></h2>
+        <p>如果没有悄然伫立阡陌并为陌上风情所陶醉的人，那么花开也寂寞，风情也苍白....</p>
+      </ul>
+    </section>
+    <section> <a href="#"><img src="{% static 'blogs/images/text02.jpg' %}"></a>
+      <ul>
+        <h2><a href="#">岁月留痕之时光</a></h2>
+        <p>每逢新旧年交替时候，我就被笼罩在一股茫然的思绪里，逃也逃不脱...</p>
+      </ul>
+    </section>
+  </div>
+</div>
+{% for user in userinfo %}
+<div class="mainContent2">
+    <aside>
+      <div class="avatar">
+        <a href="{% url 'blogs:index' user.username %}"><span>{{ user.username }}</span></a>
+      </div>
+      <section class="topspaceinfo">
+        <h1>{{ user.email }}</h1>
+{#        <p>{{ userinfo.company }}  {{ userinfo.email }}</p>#}
+      </section>
+      <div class="userinfo"> 
+        <p class="q-fans"> 粉丝：<a href="/" target="_blank">315430</a></p>
+        <p class="btns"><a href="/" target="_blank" >私信</a><a href="/" target="_blank">相册</a><a href="/" target="_blank">博客</a></p>
+      </div>
+      <section class="newpic">
+         <h2>最近访客</h2>
+         <ul>
+           <li><a href="/"><img src="{% static 'blogs/images/01.jpg' %}"></a></li>
+           <li><a href="/"><img src="{% static 'blogs/images/s3.jpg' %}"></a></li>
+           <li><a href="/"><img src="{% static 'blogs/images/s0.jpg' %}"></a></li>
+           <li><a href="/"><img src="{% static 'blogs/images/s2.jpg' %}"></a></li>
+           <li><a href="/"><img src="{% static 'blogs/images/s5.jpg' %}"></a></li>
+           <li><a href="/"><img src="{% static 'blogs/images/s6.jpg' %}"></a></li>
+           <li><a href="/"><img src="{% static 'blogs/images/s7.jpg' %}"></a></li>
+         </ul>
+      </section>
+      <section class="taglist">
+         <h2>全部标签</h2>
+         <ul>
+           <li><a href="{% url 'blogs:python' user.username %}">Python</a></li>
+           <li><a href="/">C/C++</a></li>
+           <li><a href="http://python.usyiyi.cn/translate/django_182/index.html">Django</a></li>
+           <li><a href="{% url 'blogs:linux' user.username %}">Linux</a></li>
+        </ul>
+      </section>
+    <script src='{% static 'blogs/js/jquery.js' %}'></script>
+    <script src="{% static 'blogs/js/index.js' %}"></script>
+    </aside>
+    <div class="blogitem">
+        {% for ob in objects %}
+              <article>
+                <h2 class="title"><a href="{% url 'blogs:article' user.username ob.id %}" target="_blank" >{{ ob.title }}</a></h2>
+                <ul class="text">
+                  <p class="textimg"><img src="{{ ob.blog_imgurl }}"></p>
+                  <div class="article_description">{{ ob.body | safe | slice:":100" }}...</div>
+                </ul>
+                <div class="textfoot">
+                  <a href="{% url 'blogs:article' user.username ob.id %}">阅读全文</a><a href="/">评论</a><a href="/">转载</a>
+                </div>
+              </article>
+        {% endfor %}
+
+    <div class="pagination">
+        {% if objects.has_previous %}
+            <a href="?page={{ objects.previous_page_number }}">前一页</a>
+        {% else %}
+            <a>前一页</a>
+        {% endif %}
+
+        {% for p in page_range %}
+          {% ifequal p objects.number %}
+            <a>{{ p }}</a>
+          {% else %}
+            <a href="?page={{ p }}" title="第{{ p }}页">{{p}}</a>
+          {% endifequal %}
+        {% endfor %}
+
+        {% if objects.has_next %}
+            <a href="?page={{ objects.next_page_number }}">后一页</a>
+        {% else %}
+            <a>后一页</a>
+        {% endif %}
+    </div>
+
+    </div>
+ </div>
+ <footer>
+   <div class="footavatar">
+     <img src="{% static 'blogs/images/s8.png' %}" class="footphoto">
+     <ul class="footinfo">
+       <p class="fname"><a href="{% url 'blogs:index' user.username %}" >{{ user.username }}</a>  </p>
+       <p class="finfo">性别：男 年龄：23岁</p>
+       <p>现居：木星上行</p></ul>
+   </div>
+   <div class="Copyright">
+     <ul>
+       <a href="/">帮助中心</a><a href="/">博客客服</a><a href="/">投诉中心</a><a href="/">博客协议</a>
+     </ul>
+     <p>Design by DanceSmile</p>
+   </div>
+ </footer>
+{% endfor %}
+</body>
+</html>

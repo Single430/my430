@@ -1,0 +1,8 @@
+* { margin: 0; padding: 0 }
+body { font: 12px "宋体", "Arial Narrow", HELVETICA; color: #3F3E3C; line-height: 1.5; background: url(../images/bg-05.jpg) no-repeat top center #96CEB4; background-size: 120% 120% }
+img { border: 0; vertical-align: middle }
+p { display: block; }
+ul { list-style: none; }
+a ,.ulist section  a img{ color: #186aa9; text-decoration: none; transition: All 1s ease; -webkit-transition: All 1s ease; -moz-transition: All 1s ease; -ms-transition: All 1s ease;-o-transition: All 1s ease; }
+a:hover { color: #000; }
+.blank { height: 5px; overflow: hidden; width: 100%; margin: auto; clear: both }

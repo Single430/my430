@@ -1,0 +1,79 @@
+<!doctype html>
+{% extends "blogs/base.html" %}
+{% load staticfiles %}
+
+{% block content %}
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="keywords" content="绿色模板,个人网站模板,个人博客模板,博客模板,css3,html5,网站模板" />
+<meta name="description" content="这是一个有关Green绿色小清新的夏天的css3 html5 网站模板" />
+<link href="{% static 'blogs/css/styles.css' %}" rel="stylesheet">
+<!--[if lt IE 9]>
+<script src="js/modernizr.js"></script>
+<![endif]-->
+</head>
+<body>
+{% for user in userinfo %}
+    <title>{{ user.username }}博客</title>
+<header>
+  <nav id="nav">
+    <ul>
+      <li><a href="{% url 'blogs:index' user.username %}">网站首页</a></li>
+      <li><a href="{% url 'blogs:python' user.username %}">Python</a></li>
+        <li><a href="{% url 'blogs:linux' user.username %}">Linux</a></li>
+      <li><a href="{% url 'blogs:add_article' user.username %}" style="text-align: end">添加文章</a></li>
+    </ul>
+    <script src="{% static 'blogs/js/silder.js' %}"></script><!--获取当前页导航 高亮显示标题-->
+  </nav>
+</header>
+<div class="mainContent2">
+    <aside>
+      <div class="avatar">
+        <a href="{% url 'blogs:index' user.username %}"><span>{{ user.username }}</span></a>
+      </div>
+      <section class="topspaceinfo">
+        <h1>{{ user.email }}</h1>
+{#        <p>{{ userinfo.company }}  {{ userinfo.email }}</p>#}
+      </section>
+      <div class="userinfo">
+        <p class="q-fans"> 粉丝：<a href="/" target="_blank">315430</a></p>
+        <p class="btns"><a href="/" target="_blank" >私信</a><a href="/" target="_blank">相册</a><a href="/" target="_blank">博客</a></p>
+      </div>
+      <section class="newpic">
+         <h2>最近访客</h2>
+         <ul>
+           <li><a href="/"><img src="{% static 'blogs/images/01.jpg' %}"></a></li>
+           <li><a href="/"><img src="{% static 'blogs/images/s3.jpg' %}"></a></li>
+           <li><a href="/"><img src="{% static 'blogs/images/s0.jpg' %}"></a></li>
+           <li><a href="/"><img src="{% static 'blogs/images/s2.jpg' %}"></a></li>
+           <li><a href="/"><img src="{% static 'blogs/images/s5.jpg' %}"></a></li>
+           <li><a href="/"><img src="{% static 'blogs/images/s6.jpg' %}"></a></li>
+           <li><a href="/"><img src="{% static 'blogs/images/s7.jpg' %}"></a></li>
+         </ul>
+      </section>
+      <section class="taglist">
+         <h2>全部标签</h2>
+         <ul>
+           <li><a href="{% url 'blogs:python' user.username %}">Python</a></li>
+           <li><a href="/">C/C++</a></li>
+           <li><a href="/">Django</a></li>
+           <li><a href="/">Linux</a></li>
+        </ul>
+      </section>
+    </aside>
+    <div class="blogitem">
+          <article>
+              {% for x in python_blog %}
+                <h2 class="ptit"><a href="{% url 'blogs:article' user.username x.id %}"> {{ x.title }}</a></h2>
+                <h3 class="ptime">发布时间: {{ x.publish_date }} 作者: {{ x.author }}  类型: {{ x.blog_type }} </h3>
+                <p class="pcon">{{ x.body_des }}</p><br />
+{#                <div class="line"></div>#}
+              {% endfor %}
+          </article>
+    </div>
+ </div>
+{% endfor %}
+</body>
+</html>
+{% endblock content %}

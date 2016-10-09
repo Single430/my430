@@ -1,0 +1,85 @@
+<!doctype html>
+{% extends "blogs/base.html" %}
+{% load staticfiles %}
+
+{% block content %}
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="keywords" content="绿色模板,个人网站模板,个人博客模板,博客模板,css3,html5,网站模板" />
+<meta name="description" content="这是一个有关Green绿色小清新的夏天的css3 html5 网站模板" />
+<link href="{% static 'blogs/css/styles.css' %}" rel="stylesheet">
+<!--[if lt IE 9]>
+<script src="js/modernizr.js"></script>
+<![endif]-->
+</head>
+<body>
+{% for user in userinfo %}
+    <title>{{ user.username }}博客</title>
+<div class="mainContent2">
+    <aside>
+      <div class="avatar">
+        <a href="{% url 'blogs:index' user.username %}"><span>{{ user.username }}</span></a>
+      </div>
+      <section class="topspaceinfo">
+        <h1>{{ user.email }}</h1>
+{#        <p>{{ userinfo.company }}  {{ userinfo.email }}</p>#}
+      </section>
+      <div class="userinfo">
+        <p class="q-fans"> 粉丝：<a href="/" target="_blank">315430</a></p>
+        <p class="btns"><a href="/" target="_blank" >私信</a><a href="/" target="_blank">相册</a><a href="/" target="_blank">博客</a></p>
+      </div>
+      <section class="newpic">
+         <h2>最近访客</h2>
+         <ul>
+           <li><a href="/"><img src="{% static 'blogs/images/01.jpg' %}"></a></li>
+           <li><a href="/"><img src="{% static 'blogs/images/s3.jpg' %}"></a></li>
+           <li><a href="/"><img src="{% static 'blogs/images/s0.jpg' %}"></a></li>
+           <li><a href="/"><img src="{% static 'blogs/images/s2.jpg' %}"></a></li>
+           <li><a href="/"><img src="{% static 'blogs/images/s5.jpg' %}"></a></li>
+           <li><a href="/"><img src="{% static 'blogs/images/s6.jpg' %}"></a></li>
+           <li><a href="/"><img src="{% static 'blogs/images/s7.jpg' %}"></a></li>
+         </ul>
+      </section>
+      <section class="taglist">
+         <h2>全部标签</h2>
+         <ul>
+           <li><a href="/">Python</a></li>
+           <li><a href="/">C/C++</a></li>
+           <li><a href="/">Django</a></li>
+           <li><a href="/">Linux</a></li>
+        </ul>
+      </section>
+    </aside>
+    <div class="blogitem">
+        <a href="{% url 'blogs:edit_article' user.username blog_content.id %}" style="color: #0d0d0d; font-size: medium;">编辑</a>
+        <a href="{% url 'blogs:del_article' user.username blog_content.id %}" style="color: red; font-size: medium;">删除</a>
+          <article>
+            <h2 class="title">{{ blog_content.title }}</h2>
+              <h3>发布时间: {{ blog_content.publish_date }}&nbsp;&nbsp;作者: {{ blog_content.author }}</h3>
+            <ul class="text">
+              <p class="textimg"><img src="{{ blog_content.blog_imgurl }}"></p>
+              <p>{{ blog_content.body | safe | linebreaksbr }}</p></ul>
+          </article>
+    </div>
+ </div>
+    <!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key="{{ blog_content.id }}" data-title="{{ blog_content.title }}" data-url="{% url 'blogs:article' user.username blog_content.id %}"></div>
+    <!-- 多说评论框 end -->
+    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+    <script type="text/javascript">
+        var duoshuoQuery = {short_name:"自动生成"};
+        (function() {
+            var ds = document.createElement('script');
+            ds.type = 'text/javascript';ds.async = true;
+            ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+            ds.charset = 'UTF-8';
+            (document.getElementsByTagName('head')[0]
+             || document.getElementsByTagName('body')[0]).appendChild(ds);
+        })();
+    </script>
+    <!-- 多说公共JS代码 end -->
+{% endfor %}
+</body>
+</html>
+{% endblock content %}
